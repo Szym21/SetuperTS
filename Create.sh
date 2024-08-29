@@ -9,7 +9,7 @@ read -p "Enter directory name: " dirname
 if [ ! -d "$dirname" ]
 then
     echo "Directory doesn't exist. Creating now"
-    mkdir ../$dirname
+    mkdir ./$dirname
     echo "(1/x) Directory created"
 else
     echo "(1/x) Directory exists"
@@ -42,7 +42,15 @@ echo '{
   }
 }' >> tsconfig.json
 
+#add scaffolded folders
+echo '(8/x) creating neccessary folders...'
+mkdir src
+
+#create main entry point
+echo '(9/x) creating index.ts...'
+echo 'console.log("hello world!")' >> ./src/index.ts
+
 #edit build script in package.json
-echo '(6/x) adding build script...'
-jq '.scripts += {build: "npx tsc"}' package.json > package.json.tmp
-mv package.json.tmp package.json
+echo '(10/x) adding build script...'
+jq '.scripts += {build: "npx tsc"}' package.json > tmp.$$.json && mv tmp.$$.json package.json
+jq '.main = "dist/index.js"' package.json > tmp.$$.json && mv tmp.$$.json package.json
