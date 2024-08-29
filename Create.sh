@@ -54,3 +54,36 @@ echo 'console.log("hello world!")' >> ./src/index.ts
 echo '(10/x) adding build script...'
 jq '.scripts += {build: "npx tsc"}' package.json > tmp.$$.json && mv tmp.$$.json package.json
 jq '.main = "dist/index.js"' package.json > tmp.$$.json && mv tmp.$$.json package.json
+
+
+#1st build of project
+echo '(11/x) initial build...'
+npm run build
+
+#addition of README
+echo '(12/x) Creating README.MD...'
+touch README.MD
+
+#git initialization
+echo '(13/x) preparing git repository...'
+git init
+echo '# Dependency directories
+node_modules/
+jspm_packages/
+
+# Snowpack dependency directory (https://snowpack.dev/)
+web_modules/
+
+# TypeScript cache
+*.tsbuildinfo\' >> .gitignore
+
+git add .
+git commit -am "initial commit - scaffolded"
+
+#adding remote
+echo '(14/x) preparing github remote repository...'
+gh repo create $dirname --public
+git remote add origin https://github.com/Szym21/$dirname.git
+git branch -M main
+git push -u origin main
+
