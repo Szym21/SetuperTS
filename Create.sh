@@ -9,7 +9,7 @@ read -p "Enter directory name: " dirname
 if [ ! -d "$dirname" ]
 then
     echo "Directory doesn't exist. Creating now"
-    mkdir ./$dirname
+    mkdir ../$dirname
     echo "(1/x) Directory created"
 else
     echo "(1/x) Directory exists"
